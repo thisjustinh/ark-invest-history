@@ -14,8 +14,8 @@ latest.to_csv('../transactions/latest.csv', index=False)
 
 master = pd.read_csv('../transactions/master.csv')
 
-if master['date'][-1] != latest['date'][0]:
+if master['date'].iloc[-1] != latest['date'].iloc[0]:
     master = pd.concat([master, latest])
-    master.to_csv('../transactions/master.csv', index=False)
-    # print(master)
+    # master.to_csv('../transactions/master.csv', index=False)
+    print(master)
 

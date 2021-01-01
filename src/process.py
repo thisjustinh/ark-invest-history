@@ -12,7 +12,7 @@ date = new['date'][0]
 old = pd.read_csv(f'../fund-holdings/{fund}.csv')
 
 if old['date'][0] != new['date'][0]:
-    # new.to_csv(f'../fund-holdings/{fund}.csv', index=False)
+    new.to_csv(f'../fund-holdings/{fund}.csv', index=False)
 
     transactions = []
     for index, row in new.iterrows():
