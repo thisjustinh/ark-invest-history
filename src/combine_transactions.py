@@ -1,10 +1,10 @@
 import pandas as pd
 
-arkf = pd.read_csv('../transactions/deltaARKF.csv')
-arkk = pd.read_csv('../transactions/deltaARKK.csv')
-arkg = pd.read_csv('../transactions/deltaARKG.csv')
-arkq = pd.read_csv('../transactions/deltaARKQ.csv')
-arkw = pd.read_csv('../transactions/deltaARKW.csv')
+arkf = pd.read_csv('../fund-holdings/deltaARKF.csv')
+arkk = pd.read_csv('../fund-holdings/deltaARKK.csv')
+arkg = pd.read_csv('../fund-holdings/deltaARKG.csv')
+arkq = pd.read_csv('../fund-holdings/deltaARKQ.csv')
+arkw = pd.read_csv('../fund-holdings/deltaARKW.csv')
 
 latest = pd.concat([arkf, arkk, arkg, arkq, arkw])
 latest.to_csv('../transactions/latest.csv', index=False)
