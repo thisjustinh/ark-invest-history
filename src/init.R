@@ -16,7 +16,7 @@ test <- read_csv('test.csv')
 
 for(etf in c('ARKK', 'ARKQ', 'ARKW', 'ARKG', 'ARKF')) {
   path <- paste('../fund-holdings/delta', etf, '.csv', sep='')
-  test %>%
+  ark.track %>%
     filter(date == as.Date("2021-01-08")) %>%
     filter(fund == etf) %>%
     write_csv(path)

@@ -1,3 +1,4 @@
 /.vscode
 Pipfile
 Pipfile.lock
+.Rhistory

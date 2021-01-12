@@ -15,11 +15,11 @@ old = pd.read_csv(f'../fund-holdings/{fund}.csv')
 
 # Doesn't do anything if the date of the fund holdings is the same as last time
 if old['date'][0] != new['date'][0]:
-    print(fund)
     if not DEBUG:
         new.to_csv(f'../fund-holdings/{fund}.csv', index=False)
 
     transactions = []
+    companies = []
     for index, row in new.iterrows():
         shares = round(float(row['shares']), 2)
         value = round(float(row['market value($)']), 2)
@@ -28,6 +28,13 @@ if old['date'][0] != new['date'][0]:
         weight = round(float(row['weight(%)']) / 100, 4)
 
         old_row = old.loc[old['company'] == row['company']]
+        # Handling multiple occurrences of currencies
+        # Ignore all but first occurrence in holdings
+        if pd.isnull(row['ticker']):
+            if row['company'] in companies:
+                continue
+
+        companies.append(row['company'])
 
         if old_row.empty:
             # completely new holding
@@ -59,7 +66,7 @@ if old['date'][0] != new['date'][0]:
 
             oldValue = round(float(old_row['market value($)'].iloc[0]), 2)
             oldStockPrice = round(oldValue / oldShares, 2)
-            oldWeight = round(float(old_row['weight(%)'].iloc[0]), 4)
+            oldWeight = round(float(old_row['weight(%)'].iloc[0]) / 100, 4)
 
             transactions.append([
                 date,
@@ -73,7 +80,7 @@ if old['date'][0] != new['date'][0]:
                 round(shares - oldShares, 2),  # deltaShares
                 round((shares - oldShares) * stockPrice / 1e06, 2),
                 round((value - oldValue) / 1e06, 2),  # deltaValue
-                stockPrice - oldStockPrice,  # deltaPrice
+                round(stockPrice - oldStockPrice, 2),  # deltaPrice
                 round((stockPrice - oldStockPrice) / oldStockPrice, 4),
                 round((weight - oldWeight) / oldWeight, 4),  # deltaWeight
                 action
@@ -81,9 +88,9 @@ if old['date'][0] != new['date'][0]:
 
     # Second pass for checking if anything has been completely sold
     for index, row in old.iterrows():
-        if not new['company'].str.contains(row['company']).any():
-            oldStockPrice = round(float(old_row['stockPrice'].iloc[0]), 2)
-            oldValue = round(float(old_row['value'].iloc[0]), 2)
+        if not (new['company'] == row['company']).any():
+            oldValue = round(float(old_row['market value($)'].iloc[0]), 2)
+            oldStockPrice = round(oldValue / oldShares, 2)
 
             # completely sold holding
             transactions.append([
@@ -97,7 +104,7 @@ if old['date'][0] != new['date'][0]:
                 0,
                 oldShares,
                 '',
-                -1 * oldValue,
+                -1 * round(oldValue / 1e06, 2),
                 '',
                 '',
                 '',
@@ -125,8 +132,11 @@ if old['date'][0] != new['date'][0]:
                                             'action'])
 
     if DEBUG:
-        print(transactions_csv.to_string())
-        print(transactions_csv.shape)
+        # transactions_csv.apply(str, axis=1)
+        check = transactions_csv.sort_values('deltaShares')
+        print(check.to_string())
+        print(check.shape)
+        check.to_csv('temp.csv', index=False)
     else:
         transactions_csv.to_csv(f'../fund-holdings/delta{fund}.csv',
                                 index=False)
