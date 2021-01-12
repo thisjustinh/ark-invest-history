@@ -26,4 +26,4 @@ if DEBUG:
            == master.shape[0] + latest.shape[0])
 elif master['date'].iloc[-1] != latest['date'].iloc[0]:
     master = pd.concat([master, latest])
-    master.to_csv('../transactions/master.csv', index=False)
+    master.to_csv('../fund-holdings/master.csv', index=False)
