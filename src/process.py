@@ -88,8 +88,15 @@ if old['date'][0] != new['date'][0]:
 
     # Second pass for checking if anything has been completely sold
     for index, row in old.iterrows():
+        # Handling multiple occurrences of currencies
+        # Ignore all but first occurrence in holdings
+        if pd.isnull(row['ticker']):
+            if row['company'] in companies:
+                continue
+
         if not (new['company'] == row['company']).any():
-            oldValue = round(float(old_row['market value($)'].iloc[0]), 2)
+            oldShares = round(float(row['shares'].iloc[0]), 2)
+            oldValue = round(float(row['market value($)'].iloc[0]), 2)
             oldStockPrice = round(oldValue / oldShares, 2)
 
             # completely sold holding
@@ -110,6 +117,8 @@ if old['date'][0] != new['date'][0]:
                 '',
                 'Exit'
             ])
+
+            companies.append(row['company'])
 
     # Check nonempty
     if len(transactions):
