@@ -29,11 +29,11 @@ arkw$`market value($)`=as.numeric(gsub("[$,m]", "", arkw$`market value($)`))* 10
 arkg$`market value($)`=as.numeric(gsub("[$,m]", "", arkg$`market value($)`))* 1000000
 arkf$`market value($)`=as.numeric(gsub("[$,m]", "", arkf$`market value($)`))* 1000000
 
-arkk$`weight(%)` = arkk$`weight(%)`*100
-arkq$`weight(%)` = arkq$`weight(%)`*100
-arkw$`weight(%)` = arkw$`weight(%)`*100
-arkg$`weight(%)` = arkg$`weight(%)`*100
-arkf$`weight(%)` = arkf$`weight(%)`*100
+arkk$`weight(%)` = round(arkk$`weight(%)`*100, 2)
+arkq$`weight(%)` = round(arkq$`weight(%)`*100, 2)
+arkw$`weight(%)` = round(arkw$`weight(%)`*100, 2)
+arkg$`weight(%)` = round(arkg$`weight(%)`*100, 2)
+arkf$`weight(%)` = round(arkf$`weight(%)`*100, 2)
 
 
 arkk$date = as.character(format(arkk$date, format="%m/%d/%Y"))
