@@ -8,15 +8,19 @@ holdings = StringIO(sys.stdin.read())
 
 new = pd.read_csv(holdings, error_bad_lines=False)
 new = new.iloc[:-3]
+new = new.drop(columns=["cusip"])
 
 fund = new['fund'][0]
 date = new['date'][0]
-old = pd.read_csv(f'../fund-holdings/{fund}.csv')
+old = pd.read_csv(f'../fund-holdings/latest{fund}.csv')
 
 # Doesn't do anything if the date of the fund holdings is the same as last time
 if old['date'][0] != new['date'][0]:
     if not DEBUG:
-        new.to_csv(f'../fund-holdings/{fund}.csv', index=False)
+        master_fund = pd.read_csv(f'../fund-holdings/{fund}.csv')
+        pd.concat([master_fund, new]).to_csv(f'../fund-holdings/{fund}.csv')
+
+        new.to_csv(f'../fund-holdings/latest{fund}.csv', index=False)
 
     transactions = []
     companies = []
@@ -26,15 +30,30 @@ if old['date'][0] != new['date'][0]:
         value_millions = round(value / 1e06, 2)
         stockPrice = round(value / shares, 2)
         weight = round(float(row['weight(%)']) / 100, 4)
-
-        old_row = old.loc[old['company'] == row['company']]
         # Handling multiple occurrences of currencies
-        # Ignore all but first occurrence in holdings
+        # Sum all occurrence values
         if pd.isnull(row['ticker']):
             if row['company'] in companies:
                 continue
+            else:
+                indices = []
+                for i, r in new.iterrows():
+                    if r['company'] == row['company']:
+                        indices.append(i)
+                print(indices)
+                if len(indices) > 1:
+                    shares = round(float(sum(
+                        [new['shares'].iloc[i] for i in indices])), 2)
+                    value = round(float(sum(
+                        [new['market value($)'].iloc[i] for i in indices])), 2)
+                    value_millions = round(value / 1e06, 2)
+                    stockPrice = round(value / shares, 2)
+                    weight = round(float(sum(
+                        [new['weight(%)'].iloc[i] for i in indices])) / 100, 4)
 
         companies.append(row['company'])
+
+        old_row = old.loc[old['company'] == row['company']]
 
         if old_row.empty:
             # completely new holding
@@ -68,6 +87,9 @@ if old['date'][0] != new['date'][0]:
             oldStockPrice = round(oldValue / oldShares, 2)
             oldWeight = round(float(old_row['weight(%)'].iloc[0]) / 100, 4)
 
+            print(stockPrice, oldStockPrice, oldValue, oldShares)
+            print(weight, oldWeight)
+
             transactions.append([
                 date,
                 fund,
@@ -90,14 +112,28 @@ if old['date'][0] != new['date'][0]:
     for index, row in old.iterrows():
         # Handling multiple occurrences of currencies
         # Ignore all but first occurrence in holdings
-        if pd.isnull(row['ticker']):
-            if row['company'] in companies:
-                continue
 
         if not (new['company'] == row['company']).any():
-            oldShares = round(float(row['shares'].iloc[0]), 2)
-            oldValue = round(float(row['market value($)'].iloc[0]), 2)
+            oldShares = round(float(row['shares']), 2)
+            oldValue = round(float(row['market value($)']), 2)
             oldStockPrice = round(oldValue / oldShares, 2)
+
+            if pd.isnull(row['ticker']):
+                if row['company'] in companies:
+                    continue
+                else:
+                    indices = []
+                    for i, r in old.iterrows():
+                        if r['company'] == row['company']:
+                            indices.append(i)
+                    print(indices)
+                    if len(indices) > 1:
+                        oldShares = round(float(sum(
+                            [old['shares'].iloc[i] for i in indices])), 2)
+                        oldValue = round(float(sum(
+                            [old['market value($)'].iloc[i] for i in indices])
+                        ), 2)
+                        oldStockPrice = round(oldValue / oldShares, 2)
 
             # completely sold holding
             transactions.append([
@@ -147,5 +183,5 @@ if old['date'][0] != new['date'][0]:
         print(check.shape)
         check.to_csv('temp.csv', index=False)
     else:
-        transactions_csv.to_csv(f'../fund-holdings/delta{fund}.csv',
+        transactions_csv.to_csv(f'../transactions/delta{fund}.csv',
                                 index=False)

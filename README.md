@@ -7,9 +7,6 @@ ARK Invest has five active ETFs (ARKK, ARKG, ARKQ, ARKW, ARKF) and we aim to tra
 This repository is not affiliated with ARK Invest and accepts no responsibility for financial decisions made.
 
 ## Acknowledgments
-
-Thanks to [KarlZhu-SE](https://github.com/KarlZhu-SE/ark-funds-monitor) whose JSON I used to initialize the repository.
-
 Thanks to [ArkTrack](https://arktrack.com) whose data I used to initialize the repository.
 
 Thanks to [tigger0jk](https://github.com/tigger0jk/ark-invest-scraper) for the scraping workflow for the holdings.
