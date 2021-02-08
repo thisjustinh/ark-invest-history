@@ -140,4 +140,5 @@ if old['date'][0] != new['date'][0]:
         check.to_csv('temp.csv', index=False)
     else:
         transactions_csv.to_csv(f'../transactions/delta{fund}.csv',
-                                index=False)
+                                index=False) 
+
