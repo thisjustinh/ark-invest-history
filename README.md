@@ -8,6 +8,8 @@ The folders each hold different data: `fund-holdings` contains the actual publis
 
 This repository is not affiliated with ARK Invest and accepts no responsibility for financial decisions made.
 
+[R Shiny App Link](https://superbia-vice.shinyapps.io/arkanine/)
+
 ## Acknowledgments
 Thanks to [ArkTrack](https://arktrack.com) whose data I used to initialize the repository.
 
