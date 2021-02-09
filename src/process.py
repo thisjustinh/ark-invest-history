@@ -22,7 +22,7 @@ new = new.groupby(['date', 'fund', 'company', 'ticker'],
 if old['date'][0] != new['date'][0]:
     if not DEBUG:
         master_fund = pd.read_csv(f'../fund-holdings/{fund}.csv')
-        pd.concat([master_fund, new]).to_csv(f'../fund-holdings/{fund}.csv')
+        pd.concat([master_fund, new]).to_csv(f'../fund-holdings/{fund}.csv', index=False)
 
         new.to_csv(f'../fund-holdings/latest{fund}.csv', index=False)
 
