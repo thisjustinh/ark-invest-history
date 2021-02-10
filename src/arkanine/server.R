@@ -11,6 +11,7 @@ function(input, output) {
   arkf_outstanding <- 56.05e06
   
   master <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/master.csv") %>%
+    mutate(date = as.Date(strptime(date, "%Y-%m-%d"))) %>%
     group_by(date, fund) %>%
     summarize(reported_assets=sum(`market value($)`), weight=sum(`weight(%)`) / 100) %>%
     mutate(total_assets=reported_assets / weight) %>%
