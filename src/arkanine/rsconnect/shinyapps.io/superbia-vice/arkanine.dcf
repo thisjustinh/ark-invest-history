@@ -5,6 +5,8 @@ account: superbia-vice
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3605259
-bundleId: 4199084
+bundleId: 4203493
 url: https://superbia-vice.shinyapps.io/arkanine/
-when: 1612845659.30776
+when: 1612920694.25935
+asMultiple: FALSE
+asStatic: FALSE

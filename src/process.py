@@ -10,19 +10,22 @@ new = pd.read_csv(holdings, error_bad_lines=False)
 new = new.iloc[:-3]
 new = new.drop(columns=["cusip"])
 
-fund = new['fund'][0]
-date = new['date'][0]
-old = pd.read_csv(f'../fund-holdings/latest{fund}.csv')
-
 # combine multiple occurrences
 new = new.groupby(['date', 'fund', 'company', 'ticker'],
                   as_index=False, dropna=False).agg('sum')
+# convert date to yyyy-mm-dd str
+new['date'] = pd.to_datetime(new['date']).astype(str)
+
+fund = new['fund'][0]
+date = new['date'][0]
+old = pd.read_csv(f'../fund-holdings/latest{fund}.csv')
 
 # Doesn't do anything if the date of the fund holdings is the same as last time
 if old['date'][0] != new['date'][0]:
     if not DEBUG:
         master_fund = pd.read_csv(f'../fund-holdings/{fund}.csv')
-        pd.concat([master_fund, new]).to_csv(f'../fund-holdings/{fund}.csv', index=False)
+        pd.concat([master_fund, new]).to_csv(f'../fund-holdings/{fund}.csv',
+                                             index=False)
 
         new.to_csv(f'../fund-holdings/latest{fund}.csv', index=False)
 
@@ -132,13 +135,12 @@ if old['date'][0] != new['date'][0]:
                                             'deltaWeight',
                                             'action'])
 
-    if DEBUG:
-        # transactions_csv.apply(str, axis=1)
-        check = transactions_csv.sort_values('deltaShares')
-        print(check.to_string())
-        print(check.shape)
-        check.to_csv('temp.csv', index=False)
-    else:
-        transactions_csv.to_csv(f'../transactions/delta{fund}.csv',
-                                index=False) 
-
+        if DEBUG:
+            # transactions_csv.apply(str, axis=1)
+            check = transactions_csv.sort_values('deltaShares')
+            print(check.to_string())
+            print(check.shape)
+            check.to_csv('temp.csv', index=False)
+        else:
+            transactions_csv.to_csv(f'../transactions/delta{fund}.csv',
+                                    index=False)

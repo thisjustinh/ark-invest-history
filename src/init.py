@@ -1,6 +1,11 @@
 import pandas as pd
 
-ark_track = pd.read_csv('ark_track.csv')
-ark_track = ark_track.drop(columns=['T212', 'T212.ISA'])
+for ticker in ['ARKK', 'ARKQ', 'ARKW', 'ARKG', 'ARKF', '']:
+    df = pd.read_csv(f'../fund-holdings/latest{ticker}.csv')
+    df['date'] = pd.to_datetime(df['date'])
+    df.to_csv(f'../fund-holdings/latest{ticker}.csv', index=False)
 
-ark_track.to_csv('../fund-holdings/master.csv', index=False)
+for ticker in ['ARKK', 'ARKQ', 'ARKW', 'ARKG', 'ARKF']:
+    df = pd.read_csv(f'../transactions/delta{ticker}.csv')
+    df['date'] = pd.to_datetime(df['date'])
+    df.to_csv(f'../transactions/delta{ticker}.csv', index=False)
