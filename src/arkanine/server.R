@@ -24,13 +24,23 @@ function(input, output) {
     mutate(market_cap_to_assets = market_cap / total_assets)
   
   output$plot <- renderPlot({
-        
     p <- ggplot(master, aes(x=date, y=market_cap_to_assets, color=fund)) + 
       geom_line() +
       geom_hline(aes(yintercept=1), linetype='dotted', col = 'red') + 
       # facet_wrap(~ fund) +
       xlab("Date") + 
-      ylab("Market Cap to Total Assets")
+      ylab("Market Cap to Total Assets") +
+      theme(axis.text.x=element_text(vjust=0.5)) +
+      scale_x_date(breaks = scales::pretty_breaks(n = 20))
+    
+    # p <- ggplot(master %>% filter(fund == "ARKK")) + 
+    #   geom_line(aes(x=date, y=market_cap), color="red") +
+    #   geom_line(aes(x=date, y=total_assets), color="blue") +
+    #   # facet_wrap(~ fund) +
+    #   xlab("Date") + 
+    #   ylab("Market Cap to Total Assets") +
+    #   theme(axis.text.x=element_text(vjust=0.5)) +
+    #   scale_x_date(breaks = scales::pretty_breaks(n = 20))
     
     print(p)
     
