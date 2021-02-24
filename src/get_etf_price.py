@@ -7,7 +7,7 @@ from pytz import timezone
 DEBUG = False
 
 history = []
-for fund in ['ARKK', 'ARKQ', 'ARKW', 'ARKG', 'ARKF']:
+for fund in ['ARKK', 'ARKQ', 'ARKW', 'ARKG', 'ARKF', 'IZRL', 'PRNT']:
     today = str(datetime.now(timezone('EST')).date())
     fund_price_action = yf.Ticker(fund).history(start=today)
     # If any are empty, quit execution of code
