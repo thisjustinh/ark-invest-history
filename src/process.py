@@ -8,6 +8,7 @@ holdings = StringIO(sys.stdin.read())
 
 new = pd.read_csv(holdings, error_bad_lines=False)
 new = new.iloc[:-3]
+
 new = new.drop(columns=["cusip"])
 
 # combine multiple occurrences
@@ -140,7 +141,6 @@ if old['date'][0] != new['date'][0]:
             check = transactions_csv.sort_values('deltaShares')
             print(check.to_string())
             print(check.shape)
-            check.to_csv('temp.csv', index=False)
         else:
             transactions_csv.to_csv(f'../transactions/delta{fund}.csv',
                                     index=False)
