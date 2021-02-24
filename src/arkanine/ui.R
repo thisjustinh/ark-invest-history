@@ -1,19 +1,30 @@
 library(shiny)
-library(ggplot2)
 
 fluidPage(
   
   titlePanel("Ark Invest History"),
   sidebarLayout(
     sidebarPanel(
-      h2("Display"),
+      h2("What do you want to see?"),
       helpText("View different plots related to Ark Invest and their five 
                actively-managed ETFs."),
-      selectInput("dataChoice",
-                  label="Data",
+      selectInput("displayChoice",
+                  label="Display",
                   choices=list("Market Cap v. Total Assets",
-                               "Difference in Market Cap v. Total Assets"),
+                               "PCA Biplot"),
                   selected="Market Cap v. Total Assets"),
+      conditionalPanel(
+        condition="input.displayChoice == 'PCA Biplot'",
+        selectInput("dataChoice",
+                    label="Data",
+                    choices=list("ARKK",
+                                 "ARKQ",
+                                 "ARKW",
+                                 "ARKG",
+                                 "ARKF"),
+                    selected="ARKK"), 
+        uiOutput("benchmarkSelectInput")
+      ),
       radioButtons("vizChoice",
                    label="Visualization",
                    choices=list("Plot"=1,
