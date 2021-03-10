@@ -1,1 +1,2 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
+2021-03-05,IZRL,MORGAN STANLEY GOVT INSTL 8035,,1601909.73,1.6,1.0,0.0046,-8185.1,-0.01,-0.01,0.0,0.0,0.0,Sell
