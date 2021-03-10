@@ -11,10 +11,11 @@ fluidPage(
       selectInput("displayChoice",
                   label="Display",
                   choices=list("Market Cap v. Total Assets",
-                               "PCA Biplot"),
+                               "PCA Biplot (alr)",
+                               "PCA Biplot (clr)"),
                   selected="Market Cap v. Total Assets"),
       conditionalPanel(
-        condition="input.displayChoice == 'PCA Biplot'",
+        condition="input.displayChoice != 'Market Cap v. Total Assets'",
         selectInput("dataChoice",
                     label="Data",
                     choices=list("ARKK",
@@ -22,14 +23,17 @@ fluidPage(
                                  "ARKW",
                                  "ARKG",
                                  "ARKF"),
-                    selected="ARKK"), 
-        uiOutput("benchmarkSelectInput")
-      ),
-      radioButtons("vizChoice",
-                   label="Visualization",
-                   choices=list("Plot"=1,
-                                "Table"=2),
-                   selected=1)
+                    selected="ARKK"),
+        conditionalPanel(
+          condition="input.displayChoice == 'PCA Biplot (alr)'",
+          uiOutput("benchmarkSelectInput")),
+        radioButtons("vizChoice",
+                     label="Visualization",
+                     choices=list("Loadings Biplot"=1,
+                                  "Full Biplot"=2,
+                                  "Scree Plot"=3),
+                     selected=1)
+      )
     ),
     mainPanel(
       plotOutput('plot')

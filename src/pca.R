@@ -2,6 +2,8 @@ library(tidyverse)
 
 data <- read_csv("../fund-holdings/ARKK.csv")
 
+benchmark <- "TSM"
+
 comp_data <- data %>%
   mutate( # get rid of NA ticker
     ticker=ifelse(is.na(ticker), str_sub(company, end=4), ticker)
@@ -13,6 +15,7 @@ comp_data <- data %>%
   replace(is.na(.), 0) %>%
   ungroup() %>%
   select(-date) %>%
+  select_if(~ !any(. == 0)) %>%  # drop any tickers with 0s 
   mutate(UNREPORTED = 0)
 
 for(i in 1:nrow(comp_data)) {
@@ -21,15 +24,15 @@ for(i in 1:nrow(comp_data)) {
 
 logratios <-
   comp_data %>%
-  mutate_all(~ . / CERS) %>%  # ratio
+  mutate_all(~ . / get(benchmark)) %>%  # ratio
   mutate_all(~ log(.)) %>% # log
-  select(-CERS)
+  select(-benchmark)
 
 logratios[logratios == -Inf] <- 0   # handle nonexistent holding
 
 pr.out <- prcomp(logratios, center=TRUE, scale.=TRUE)
 summary(pr.out)
-#ggbiplot(pr.out, scale=0)
+ggbiplot(pr.out, scale=0)
 
 pr.var <- pr.out$sdev^2
 pve <- pr.var/sum(pr.var)
