@@ -9,7 +9,9 @@ function(input, output) {
            "ARKQ" = arkq.comp,
            "ARKW" = arkw.comp,
            "ARKG" = arkg.comp,
-           "ARKF" = arkf.comp)
+           "ARKF" = arkf.comp,
+           "IZRL" = izrl.comp,
+           "PRNT" = prnt.comp)
   })
   
   output$benchmarkSelectInput <- renderUI({
