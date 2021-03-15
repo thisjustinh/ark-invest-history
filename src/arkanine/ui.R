@@ -22,7 +22,9 @@ fluidPage(
                                  "ARKQ",
                                  "ARKW",
                                  "ARKG",
-                                 "ARKF"),
+                                 "ARKF",
+                                 "IZRL"
+                                 "PRNT"),
                     selected="ARKK"),
         conditionalPanel(
           condition="input.displayChoice == 'PCA Biplot (alr)'",
