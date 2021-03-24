@@ -5,12 +5,6 @@ library(tidyverse)
 
 # Generate alr PCA
 alr.pca.biplot <- function(comp.data, benchmark, viz) {
-  # logratios <- comp_data
-  # for(col in colnames(logratios)) {
-  #   logratios <- logratios %>%
-  #     mutate(col = log(col / benchmark))
-  # }
-  # logratios %>% select(-benchmark)
   logratios <-
     comp.data %>%
     mutate_all(~ . / get(benchmark)) %>%
@@ -29,13 +23,54 @@ clr.pca.biplot <- function(comp.data, viz) {
   
   # y = (I_D - (1/D)J_D) log(X)
   D <- ncol(comp.mat)
-  clr.mat <- t((diag(D) - (1/D) * matrix(1, D, D)) %*% t(log(comp.mat))) %>%
+  # clr.mat <- t((diag(D) - (1/D) * matrix(1, D, D)) %*% t(log(comp.mat))) %>%
+  clr.mat <- log(comp.mat) %*% t((diag(D) - (1/D) * matrix(1, D, D)))%>%
     as.data.frame() %>%
     setNames(., colnames(comp.data))  # restore column names, though maybe no meaning
   
   pr.out <- prcomp(clr.mat, center=TRUE, scale.=TRUE)
   
   return(pca.viz(pr.out, viz))
+}
+
+# Egozcue et al. (2003)
+ilr.pca.biplot <- function(comp.data, viz) {
+  y <- log(as.matrix(comp.data))
+  y <- y - rowMeans(y)
+  k <- dim(y)[2]
+  H <- contr.helmert(k)
+  H <- t(H) / sqrt((2:k)*(2:k-1))
+  z <- (y %*% t(H))
+  colnames(z) <- colnames(comp.data)[-1]
+  # z <- loop.ilr(comp.data)
+  
+  pr.out <- prcomp(z, center=TRUE, scale.=TRUE)
+  
+  return(pca.viz(pr.out, viz))
+  
+}
+
+loop.ilr <- function(comp.data) {
+  z <- matrix(NA, nrow(comp.data), ncol(comp.data) - 1)
+  comp.data <- as.data.frame(comp.data)
+  for (n in 1:nrow(comp.data)) {
+    for (i in 1:ncol(comp.data) - 1) {
+      z[n, i] <- 
+        sqrt(i / (i + 1)) * log(prod(comp.data[n, 1:i])^(1 / i) / comp.data[n,i + 1])
+    }
+  }
+  colnames(z) <- colnames(comp.data)[-1]  # again, not sure about the meaning
+  
+  return(z)
+}
+
+helmert.ilr <- function(comp.data) {
+  y <- log(comp.data)
+  y <- y - rowMeans(y)
+  k <- dim(y)[2]
+  H <- contr.helmert(k)
+  H <- t(H) / sqrt((2:k)*(2:k-1))
+  return(y %*% t(H))
 }
 
 ### Helper PCA Functions ###
@@ -84,6 +119,7 @@ pca.viz <- function(pca.out, viz) {
       geom_label(data=selected, aes(x=scale*PC1, y=scale*PC2, label=row.names(selected)), size=3, vjust="outward")
   } else if (viz == 2) {
     p <- ggbiplot(pca.out, scale=0)
+    # p <- ggbiplot(pca.out)
   } else if (viz == 3) {
     pr.var <- pca.out$sdev^2
     pve <- pr.var/sum(pr.var)
