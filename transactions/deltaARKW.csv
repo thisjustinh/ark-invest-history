@@ -1,2 +1,2 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
-2021-03-23,ARKW,MORGAN STANLEY GOVT INSTL 8035,,0,0,,0,9875091.04,,-9.88,,,,Exit
+2021-03-24,ARKW,MORGAN STANLEY GOVT INSTL 8035,,9124563.86,9.12,1.0,0.0013,9124563.86,9.12,9.12,,,,Enter
