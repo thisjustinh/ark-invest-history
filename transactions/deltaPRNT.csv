@@ -1,2 +1,2 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
-2021-03-19,PRNT,MORGAN STANLEY GOVT INSTL 8035,,896244.92,0.9,1.0,0.0016,-105723.24,-0.11,-0.11,0.0,0.0,-0.1111,Sell
+2021-03-25,PRNT,MORGAN STANLEY GOVT INSTL 8035,,1338659.92,1.34,1.0,0.0025,442415.0,0.44,0.44,0.0,0.0,0.5625,Buy
