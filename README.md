@@ -1,6 +1,7 @@
 # ARK Transactions
 
 ![Update holdings & transactions](https://github.com/xinging-birds/ark-invest-history/workflows/Update%20holdings%20&%20transactions/badge.svg)
+[![Fetch ETF prices](https://github.com/xinging-birds/ark-invest-history/actions/workflows/price.yml/badge.svg)](https://github.com/xinging-birds/ark-invest-history/actions/workflows/price.yml)
 
 ARK Invest has five active ETFs (ARKK, ARKG, ARKQ, ARKW, ARKF) and we aim to track data scraped from their investor resources. Data is scraped using git workflows, and then processed to be added to the master historical transactions CSV file.
 
