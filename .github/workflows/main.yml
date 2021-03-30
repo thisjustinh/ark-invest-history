@@ -7,7 +7,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-    - cron: '00 1 * * 2-6'
+    - cron: '00 5 * * 1-5'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -36,7 +36,7 @@ jobs:
         run: |-
           cd src
           
-          files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv" "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_ETF_ARKQ_HOLDINGS.csv" "ARK_NEXT_GENERATION_INTERNET_ETF_ARKW_HOLDINGS.csv" "ARK_GENOMIC_REVOLUTION_MULTISECTOR_ETF_ARKG_HOLDINGS.csv" "ARK_FINTECH_INNOVATION_ETF_ARKF_HOLDINGS.csv" "THE_3D_PRINTING_ETF_PRNT_HOLDINGS.csv" "ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv")
+          files=("ARK_INNOVATION_ETF_ARKK_HOLDINGS.csv" "ARK_AUTONOMOUS_TECHNOLOGY_&_ROBOTICS_ETF_ARKQ_HOLDINGS.csv" "ARK_NEXT_GENERATION_INTERNET_ETF_ARKW_HOLDINGS.csv" "ARK_GENOMIC_REVOLUTION_MULTISECTOR_ETF_ARKG_HOLDINGS.csv" "ARK_FINTECH_INNOVATION_ETF_ARKF_HOLDINGS.csv" "ARK_SPACE_EXPLORATION_&_INNOVATION_ETF_ARKX_HOLDINGS.csv" "THE_3D_PRINTING_ETF_PRNT_HOLDINGS.csv" "ARK_ISRAEL_INNOVATIVE_TECHNOLOGY_ETF_IZRL_HOLDINGS.csv")
           
           for file in ${files[@]}; do
             curl -A "Mozilla/5.0 (X11; Linux x86_64; rv:87.0) Gecko/20100101 Firefox/87.0" https://ark-funds.com/wp-content/fundsiteliterature/csv/$file | python3 process.py
@@ -51,6 +51,6 @@ jobs:
           git config user.name "Justin's Octocat"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          timestamp=$(date -u)
+          timestamp=$(TZ='America/New_York' date)
           git commit -m "Latest data: ${timestamp}" || exit 0
           git push

@@ -9,12 +9,13 @@ arkk = pd.read_csv('../fund-holdings/latestARKK.csv')
 arkg = pd.read_csv('../fund-holdings/latestARKG.csv')
 arkq = pd.read_csv('../fund-holdings/latestARKQ.csv')
 arkw = pd.read_csv('../fund-holdings/latestARKW.csv')
+arkx = pd.read_csv('../fund-holdings/latestARKX.csv')
 
-latest = pd.concat([arkk, arkq, arkw, arkg, arkf])
+latest = pd.concat([arkk, arkq, arkw, arkg, arkf, arkx])
 
 if DEBUG:
     assert(latest.shape[0] == arkk.shape[0] + arkq.shape[0] +
-           arkw.shape[0] + arkg.shape[0] + arkf.shape[0])
+           arkw.shape[0] + arkg.shape[0] + arkf.shape[0] + arkx.shape[0])
 else:
     latest.to_csv('../fund-holdings/latest.csv', index=False)
 
@@ -35,12 +36,13 @@ arkk = pd.read_csv('../transactions/deltaARKK.csv')
 arkg = pd.read_csv('../transactions/deltaARKG.csv')
 arkq = pd.read_csv('../transactions/deltaARKQ.csv')
 arkw = pd.read_csv('../transactions/deltaARKW.csv')
+arkx = pd.read_csv('../transactions/deltaARKX.csv')
 
-latest = pd.concat([arkk, arkq, arkw, arkg, arkf])
+latest = pd.concat([arkk, arkq, arkw, arkg, arkf, arkx])
 
 if DEBUG:
     assert(latest.shape[0] == arkk.shape[0] + arkq.shape[0] +
-           arkw.shape[0] + arkg.shape[0] + arkf.shape[0])
+           arkw.shape[0] + arkg.shape[0] + arkf.shape[0] + arkx.shape[0])
 else:
     latest.to_csv('../transactions/latest.csv', index=False)
 
