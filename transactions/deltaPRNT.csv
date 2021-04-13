@@ -1,2 +1,3 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
-2021-04-12,PRNT,MORGAN STANLEY GOVT INSTL 8035,,1585884.69,1.59,1.0,0.0026,-416586.46,-0.42,-0.42,0.0,0.0,-0.2121,Sell
+2021-04-13,PRNT,DREYFUS GOVT CASH MAN INS,,1592630.05,1.59,1.0,0.0026,1592630.05,1.59,1.59,,,,Enter
+2021-04-13,PRNT,MORGAN STANLEY GOVT INSTL 8035,,0.0,0.0,,0.0,1585884.69,,-1.59,,,,Exit
