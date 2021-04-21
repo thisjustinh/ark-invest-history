@@ -9,7 +9,8 @@ function(input, output) {
            "ARKQ" = arkq.comp,
            "ARKW" = arkw.comp,
            "ARKG" = arkg.comp,
-           "ARKF" = arkf.comp)
+           "ARKF" = arkf.comp,
+           "ARKX" = arkx.comp)
   })
   
   output$benchmarkSelectInput <- renderUI({
@@ -51,6 +52,10 @@ function(input, output) {
       p <- clr.pca.biplot(dataset(), input$vizChoice)
     } else if (input$displayChoice == "PCA (ilr)") {
       p <- ilr.pca.biplot(dataset(), input$vizChoice)
+    } else if (input$displayChoice == "Robust PCA (ilr)") {
+      p <- robust.ilr.biplot(dataset(), input$vizChoice)
+    } else if (input$displayChoice == "SPCA (ilr)") {
+      p <- spca.viz(dataset(), input$vizChoice)
     }
     print(p)
   }, height=700)
