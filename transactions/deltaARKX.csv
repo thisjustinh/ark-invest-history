@@ -1,2 +1,2 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
-2021-04-30,ARKX,DREYFUS GOVT CASH MAN INS,,1413760.21,1.41,1.0,0.0021,-916264.84,-0.92,-0.92,0.0,0.0,-0.3824,Sell
+2021-05-03,ARKX,DREYFUS GOVT CASH MAN INS,,1385050.83,1.39,1.0,0.0021,-28709.38,-0.03,-0.03,0.0,0.0,0.0,Sell

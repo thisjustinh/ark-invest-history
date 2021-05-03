@@ -1,2 +1,2 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
-2021-04-27,PRNT,DREYFUS GOVT CASH MAN INS,,3404925.83,3.4,1.0,0.0057,-125.83,-0.0,-0.0,0.0,0.0,-0.0172,Sell
+2021-05-03,PRNT,DREYFUS GOVT CASH MAN INS,,3424057.77,3.42,1.0,0.0059,19131.94,0.02,0.02,0.0,0.0,0.0172,Buy
