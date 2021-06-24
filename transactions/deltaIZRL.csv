@@ -1,3 +1,2 @@
 date,fund,company,ticker,shares,value,stockPrice,weight,deltaShares,flowValue,deltaValue,deltaPrice,deltaPricePercent,deltaWeight,action
-2021-06-23,IZRL,DREYFUS GOVT CASH MAN INS,,1250110.01,1.25,1.0,0.004,305.28,0.0,0.0,0.0,0.0,0.0,Buy
-2021-06-23,IZRL,ISRAELI SHEKEL,,0.0,0.0,,0.0,101724.6,,-0.03,,,,Exit
+2021-06-24,IZRL,DREYFUS GOVT CASH MAN INS,,1282178.23,1.28,1.0,0.004,32068.22,0.03,0.03,0.0,0.0,0.0,Buy
