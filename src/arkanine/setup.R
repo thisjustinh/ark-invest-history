@@ -108,6 +108,8 @@ arkq_outstanding <- 35.7e06
 arkw_outstanding <- 44.2e06
 arkg_outstanding <- 110.01e06
 arkf_outstanding <- 56.05e06
+izrl_outstanding <- 10.83e06
+prnt_outstanding <- 14.05e06
 
 # Relevant CSVs
 arkk <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/ARKK.csv")
@@ -115,6 +117,8 @@ arkq <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-his
 arkw <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/ARKW.csv")
 arkg <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/ARKG.csv")
 arkf <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/ARKF.csv")
+izrl <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/IZRL.csv")
+prnt <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/PRNT.csv")
 master <- read_csv("https://raw.githubusercontent.com/xinging-birds/ark-invest-history/master/fund-holdings/master.csv")
 
 # Comp data dfs
@@ -123,6 +127,8 @@ arkq.comp <- process.comp(arkq)
 arkw.comp <- process.comp(arkw)
 arkg.comp <- process.comp(arkg)
 arkf.comp <- process.comp(arkf)
+izrl.comp <- process.comp(izrl)
+prnt.comp <- process.comp(prnt)
 
 # Market Cap to Assets Data Frame
 cap_to_assets <- master %>%
@@ -136,4 +142,6 @@ cap_to_assets <- master %>%
   mutate(market_cap=ifelse(fund == "ARKW", close * arkw_outstanding, market_cap)) %>%
   mutate(market_cap=ifelse(fund == "ARKG", close * arkg_outstanding, market_cap)) %>%
   mutate(market_cap=ifelse(fund == "ARKF", close * arkf_outstanding, market_cap)) %>%
+  mutate(market_cap=ifelse(fund == "IZRL", close * izrl_outstanding, market_cap)) %>%
+  mutate(market_cap=ifelse(fund == "PRNT", close * prnt_outstanding, market_cap)) %>%
   mutate(market_cap_to_assets = market_cap / total_assets)
